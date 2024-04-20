@@ -1,17 +1,17 @@
 import { Router } from 'express';
 import { ItemsController } from '../controllers/';
 import { Pool } from 'pg';
+import 'dotenv/config';
 
 const router = Router();
 
 export const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'ksg',
-    password: '12345',
-    port: 5432
-}); //TODO Move to .env file
-console.log('ROUTER:', pool);
+    user: process.env.DBUSER,
+    host: process.env.DBHOST,
+    database: process.env.DATABASE,
+    password: process.env.DBPASS,
+    port: process.env.DBPORT ? parseInt(process.env.DBPORT, 10) : undefined,
+}); 
 
 pool.on('error', (err, client) => {
     console.error('Unexpected error: ', err);
